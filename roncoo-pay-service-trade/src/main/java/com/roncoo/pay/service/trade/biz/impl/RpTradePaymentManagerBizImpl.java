@@ -18,7 +18,7 @@ import com.roncoo.pay.service.trade.entity.RpTradePaymentOrder;
 import com.roncoo.pay.service.trade.entity.RpTradePaymentRecord;
 import com.roncoo.pay.service.trade.enums.TradeStatusEnum;
 import com.roncoo.pay.service.user.enums.FundInfoTypeEnum;
-import org.mengyun.tcctransaction.Compensable;
+import org.mengyun.tcctransaction.api.Compensable;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

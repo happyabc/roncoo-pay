@@ -27,15 +27,9 @@
 	<!-- 配置maven地址 -->
 	<distributionManagement>
 		<repository>
-			<id>nexus-releases</id>
-			<name>Nexus Release Repository</name>
-			<url>http://192.168.1.221:8081/nexus/content/repositories/releases/</url>
+			<id>aliyunmaven</id>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
 		</repository>
-		<snapshotRepository>
-			<id>nexus-snapshots</id>
-			<name>Nexus Snapshot Repository</name>
-			<url>http://192.168.1.221:8081/nexus/content/repositories/snapshots/</url>
-		</snapshotRepository>
 	</distributionManagement>
 
 	<properties>

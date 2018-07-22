@@ -8,11 +8,11 @@
  */
 package com.roncoo.pay.common.core.dao.impl;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
+import com.roncoo.pay.common.core.dao.BaseDao;
+import com.roncoo.pay.common.core.entity.BaseEntity;
+import com.roncoo.pay.common.core.exception.BizException;
+import com.roncoo.pay.common.core.page.PageBean;
+import com.roncoo.pay.common.core.page.PageParam;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.session.SqlSession;
@@ -20,11 +20,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.mybatis.spring.support.SqlSessionDaoSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.roncoo.pay.common.core.dao.BaseDao;
-import com.roncoo.pay.common.core.entity.BaseEntity;
-import com.roncoo.pay.common.core.exception.BizException;
-import com.roncoo.pay.common.core.page.PageBean;
-import com.roncoo.pay.common.core.page.PageParam;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * @类功能说明： 数据访问层基础支撑类.
@@ -63,7 +62,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
      */
     @Autowired
     private SqlSessionTemplate sessionTemplate;
-
+    @Override
     public SqlSessionTemplate getSessionTemplate() {
         return sessionTemplate;
     }
@@ -71,7 +70,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     public void setSessionTemplate(SqlSessionTemplate sessionTemplate) {
         this.sessionTemplate = sessionTemplate;
     }
-
+    @Override
     public SqlSession getSqlSession() {
         return super.getSqlSession();
     }
@@ -79,6 +78,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 单条插入数据.
      */
+    @Override
     public int insert(T entity) {
         int result = sessionTemplate.insert(getStatement(SQL_INSERT), entity);
         if (result <= 0) {
@@ -90,6 +90,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 批量插入数据.
      */
+    @Override
     public int insert(List<T> list) {
         if (list.isEmpty() || list.size() <= 0) {
             return 0;
@@ -104,6 +105,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据id单条更新数据.
      */
+    @Override
     public int update(T entity) {
         entity.setEditTime(new Date());
         int result = sessionTemplate.update(getStatement(SQL_UPDATE_BY_ID), entity);
@@ -116,6 +118,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据id批量更新数据.
      */
+    @Override
     public int update(List<T> list) {
         if (list.isEmpty() || list.size() <= 0) {
             return 0;
@@ -130,6 +133,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据column批量更新数据.
      */
+    @Override
     public int update(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return 0;
@@ -144,6 +148,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据id查询数据.
      */
+    @Override
     public T getById(String id) {
         return sessionTemplate.selectOne(getStatement(SQL_SELECT_BY_ID), id);
     }
@@ -151,6 +156,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据column查询数据.
      */
+    @Override
     public T getByColumn(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return null;
@@ -164,6 +170,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
      * @param paramMap
      * @return
      */
+    @Override
     public T getBy(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return null;
@@ -174,6 +181,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据条件查询列表数据.
      */
+    @Override
     public List<T> listBy(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return null;
@@ -184,6 +192,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据column查询列表数据.
      */
+    @Override
     public List<T> listByColumn(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return null;
@@ -194,6 +203,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据column查询记录数.
      */
+    @Override
     public Long getCountByColumn(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return null;
@@ -204,6 +214,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据id删除数据.
      */
+    @Override
     public int delete(String id) {
         return (int) sessionTemplate.delete(getStatement(SQL_DELETE_BY_ID), id);
     }
@@ -211,6 +222,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据id批量删除数据.
      */
+    @Override
     public int delete(List<T> list) {
         if (list.isEmpty() || list.size() <= 0) {
             return 0;
@@ -222,6 +234,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 根据column批量删除数据.
      */
+    @Override
     public int delete(Map<String, Object> paramMap) {
         if (paramMap == null) {
             return 0;
@@ -233,6 +246,7 @@ public abstract class BaseDaoImpl<T extends BaseEntity> extends SqlSessionDaoSup
     /**
      * 分页查询数据 .
      */
+    @Override
     public PageBean listPage(PageParam pageParam, Map<String, Object> paramMap) {
         if (paramMap == null) {
             paramMap = new HashMap<String, Object>();

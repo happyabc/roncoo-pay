@@ -20,7 +20,7 @@ import com.roncoo.pay.service.account.entity.RpAccountHistory;
 import com.roncoo.pay.service.account.enums.AccountFundDirectionEnum;
 import com.roncoo.pay.service.account.enums.AccountHistoryStatusEnum;
 import com.roncoo.pay.service.account.exceptions.AccountBizException;
-import org.mengyun.tcctransaction.Compensable;
+import org.mengyun.tcctransaction.api.Compensable;
 import org.mengyun.tcctransaction.api.TransactionContext;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,6 +32,8 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+
+
 
 /**
  * @类功能说明： 账户操作service实现类
@@ -85,6 +87,7 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public RpAccount creditToAccount(String userNo, BigDecimal amount, String requestNo, String trxType, String remark){
 
@@ -105,6 +108,7 @@ public class RpAccountTransactionServiceImpl implements RpAccountTransactionServ
 	 * @param remark
 	 *            备注
 	 */
+	@Override
 	@Transactional(rollbackFor = Exception.class)
 	public RpAccount creditToAccount(String userNo, BigDecimal amount, String requestNo, String bankTrxNo, String trxType, String remark) {
 		RpAccount account = this.getByUserNo_IsPessimist(userNo, true);

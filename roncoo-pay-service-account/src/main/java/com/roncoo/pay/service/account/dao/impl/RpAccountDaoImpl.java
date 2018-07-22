@@ -8,15 +8,14 @@
  */
 package com.roncoo.pay.service.account.dao.impl;
 
-import java.util.HashMap;
-import java.util.Map;
-
-import org.springframework.stereotype.Repository;
-
 import com.roncoo.pay.common.core.dao.impl.BaseDaoImpl;
 import com.roncoo.pay.common.core.enums.PublicStatusEnum;
 import com.roncoo.pay.service.account.dao.RpAccountDao;
 import com.roncoo.pay.service.account.entity.RpAccount;
+import org.springframework.stereotype.Repository;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -31,13 +30,14 @@ import com.roncoo.pay.service.account.entity.RpAccount;
  */
 @Repository
 public class RpAccountDaoImpl  extends BaseDaoImpl<RpAccount> implements RpAccountDao{
+	@Override
 	public RpAccount getByAccountNo(String accountNo){
 		Map<String, Object> paramMap = new HashMap<String, Object>();
 		paramMap.put("accountNo", accountNo);
 		paramMap.put("status", PublicStatusEnum.ACTIVE.name());
 		return this.getBy(paramMap);
 	}
-
+	@Override
 	public RpAccount getByUserNo(Map<String, Object> map){
 		return this.getSessionTemplate().selectOne(getStatement("getByUserNo"), map);
 	}
